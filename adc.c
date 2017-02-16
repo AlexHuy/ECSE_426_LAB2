@@ -42,11 +42,15 @@ ADC_ChannelConfTypeDef ADC1_Channel;
 
 void init_ADC() {
 	//Initialize ADC_InitTypeDef instance
+	//Sets all ADCs clock to their maximum value of half the system clock (4MHz).
 	ADC1_Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
-	ADC1_Init.Resolution = ADC_RESOLUTION_8B;
+	//Sets resolution of ADC to 12bit.
+	ADC1_Init.Resolution = ADC_RESOLUTION_12B;
 	ADC1_Init.DataAlign = ADC_DATAALIGN_RIGHT;
+	//Disables multi channel scanning and instead only uses a single channel.
 	ADC1_Init.ScanConvMode = DISABLE;
 	ADC1_Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+	//Sets the ADC to not continuously convert data.
 	ADC1_Init.ContinuousConvMode = DISABLE;
 	ADC1_Init.DMAContinuousRequests = DISABLE;
 	ADC1_Init.NbrOfConversion = 1;
@@ -65,6 +69,7 @@ void init_ADC() {
 	//ADC1_Handle.ErrorCode =
 	
 	//Initialize ADC_ChannelConfTypeDef instance
+	//Sets up the temperature sensor to work (located channel 16).
 	ADC1_Channel.Channel = ADC_CHANNEL_16;
 	ADC1_Channel.Rank = 1; //Dunno
 	ADC1_Channel.SamplingTime = ADC_SAMPLETIME_480CYCLES; //Put the fastest I guess?
