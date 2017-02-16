@@ -69,9 +69,9 @@ void set_LED(int digit, int segment) {
 	switch(digit) {
 		//Controls the first digit 1000
 		case(0):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET); 				
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); 				
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); 			
 			switch(segment) {
 				//Sets the LCD to be equal to zero.
@@ -176,9 +176,9 @@ void set_LED(int digit, int segment) {
 			}
 			//Controls the second digit 0100
 		case(1):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_SET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET); 				
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); 
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); 				
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); 					
 			switch(segment) {
 //Sets the LCD to be equal to zero.
@@ -283,9 +283,9 @@ void set_LED(int digit, int segment) {
 			}
 		//Controls the second digit 0010
 		case(2):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_SET); 				
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); 				
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); 
 			switch(segment) {
 //Sets the LCD to be equal to zero.
@@ -390,9 +390,9 @@ void set_LED(int digit, int segment) {
 			}
 		//Controls the second digit 0001
 		case(3):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_13, GPIO_PIN_RESET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_14, GPIO_PIN_RESET); 				
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); 				
 			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET); 
 			switch(segment) {
 //Sets the LCD to be equal to zero.
