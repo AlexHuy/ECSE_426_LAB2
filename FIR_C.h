@@ -1,3 +1,7 @@
+#include <stdint.h>
+#include <math.h>
+#include <stdint.h>
+
 struct FIR_coeff {
 	float b0;
 	float b1;
@@ -6,4 +10,4 @@ struct FIR_coeff {
 	float b4;   
 };
 //Defines the structure of the coefficients for the FIR filter.
-int FIR_C(float* InputArray, float* OutputArray, struct FIR_coeff* coeff, int Length, int Order);
+uint32_t FIR_C(uint32_t input, struct FIR_coeff* coeff, int Order);

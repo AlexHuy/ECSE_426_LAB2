@@ -34,6 +34,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "adc.h"
+#include "FIR_C.h"
 
 /* USER CODE BEGIN 0 */
 ADC_HandleTypeDef ADC1_Handle;
@@ -49,7 +50,7 @@ void init_ADC() {
 	ADC1_Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	//Disables multi channel scanning and instead only uses a single channel.
 	ADC1_Init.ScanConvMode = DISABLE;
-	ADC1_Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+	ADC1_Init.EOCSelection = DISABLE;
 	//Sets the ADC to not continuously convert data.
 	ADC1_Init.ContinuousConvMode = DISABLE;
 	ADC1_Init.DMAContinuousRequests = DISABLE;
@@ -62,29 +63,34 @@ void init_ADC() {
 	//Initialize ADC_HandleTypeDef instance
 	ADC1_Handle.Instance = ADC1;
 	ADC1_Handle.Init = ADC1_Init;
-	//ADC1_Handle.NbrOfCurrentConversionRank = 
-	//ADC1_Handle.DMA_Handle = DMA1;
-	//ADC1_Handle.Lock = 
-	//ADC1_Handle.State =
-	//ADC1_Handle.ErrorCode =
 	
 	//Initialize ADC_ChannelConfTypeDef instance
 	//Sets up the temperature sensor to work (located channel 16).
 	ADC1_Channel.Channel = ADC_CHANNEL_16;
-	ADC1_Channel.Rank = 1; //Dunno
-	ADC1_Channel.SamplingTime = ADC_SAMPLETIME_480CYCLES; //Put the fastest I guess?
+	ADC1_Channel.Rank = 1; 
+	ADC1_Channel.SamplingTime = ADC_SAMPLETIME_480CYCLES; 
 	ADC1_Channel.Offset = 0;
 	
 	HAL_ADC_Init(&ADC1_Handle);
 	HAL_ADC_ConfigChannel(&ADC1_Handle, &ADC1_Channel);
+	HAL_ADC_Start(&ADC1_Handle);
 }
 
 uint32_t read_temp() {
+	uint32_t adc_data;
+	struct FIR_coeff coeff;
+	coeff.b0 = 0.1;
+	coeff.b1 = 0.15;
+	coeff.b2 = 0.5;
+	coeff.b3 = 0.15;
+	coeff.b4 = 0.1;
+	
 	HAL_StatusTypeDef status;
-	HAL_ADC_Start(&ADC1_Handle);
 	status = HAL_ADC_PollForConversion(&ADC1_Handle, 0);
-	if(status == HAL_OK)
-		return HAL_ADC_GetValue(&ADC1_Handle);
+	if(status == HAL_OK) {
+		adc_data = HAL_ADC_GetValue(&ADC1_Handle);
+		return FIR_C(adc_data, &coeff, 4);
+	}
 	else if(status == HAL_ERROR || status == HAL_TIMEOUT)
 		return -1;
 }

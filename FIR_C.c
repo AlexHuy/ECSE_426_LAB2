@@ -1,15 +1,13 @@
 #include "FIR_C.h"
-#include <math.h>
-#include <stdint.h>
  
 //Performs the FIR filtering in C.
-int FIR_C_online(uint8_t input, struct FIR_coeff* coeff, int Order) {
-	uint8_t moving_array[Order + 1];
+uint32_t FIR_C(uint32_t input, struct FIR_coeff* coeff, int Order) {
+	uint32_t moving_array[Order + 1];
 	int filter_coeff_pointer;
 	int counter = 0;
 	int i;
-	uint8_t sum = 0;
-	uint8_t output;
+	uint32_t sum = 0;
+	uint32_t output;
 	
 	if(counter != Order) {
 		moving_array[counter] = input;

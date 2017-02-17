@@ -45,9 +45,8 @@ GPIO_InitTypeDef GPIOA_init;
 void init_GPIO() {
 	GPIOA_init.Pin = GPIO_PIN_All;
 	GPIOA_init.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIOA_init.Pull = GPIO_NOPULL;
+	GPIOA_init.Pull = GPIO_PULLUP;
 	GPIOA_init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	//GPIOA_init.Alternate = 
 	
 	HAL_GPIO_Init(GPIOA, &GPIOA_init);
 }
