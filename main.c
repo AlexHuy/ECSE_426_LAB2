@@ -153,7 +153,7 @@ float convertToTemp(uint32_t adc_data)
 void displayTemp(float temp)
 {
 	int display[4];
-	display[3] = 0;
+	display[3] = 10;
 	display[2] = (int) (temp/10);
 	display[1] = (int) (temp - display[2]);
 	display[0] = (int) ((temp*10) - display[2] - display[1]);
