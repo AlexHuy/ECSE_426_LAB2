@@ -36,6 +36,7 @@
 #include "gpio.h"
 /* USER CODE BEGIN 0 */
 GPIO_InitTypeDef GPIOA_init;
+GPIO_InitTypeDef GPIOC_init;
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -43,12 +44,18 @@ GPIO_InitTypeDef GPIOA_init;
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 void init_GPIO() {
-	GPIOA_init.Pin = GPIO_PIN_All;
+	GPIOA_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
 	GPIOA_init.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIOA_init.Pull = GPIO_PULLUP;
-	GPIOA_init.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIOA_init.Pull = GPIO_NOPULL;
+	GPIOA_init.Speed = GPIO_SPEED_FREQ_LOW;
+     
+     GPIOC_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3;
+     GPIOC_init.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIOC_init.Pull = GPIO_NOPULL;
+	GPIOC_init.Speed = GPIO_SPEED_FREQ_LOW;
 	
 	HAL_GPIO_Init(GPIOA, &GPIOA_init);
+     HAL_GPIO_Init(GPIOC, &GPIOC_init);
 }
 /* USER CODE END 1 */
 
@@ -68,10 +75,11 @@ void set_LED(int digit, int segment) {
 	switch(digit) {
 		//Controls the first digit 1000
 		case(0):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); 				
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); 			
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET); 				
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
+               printf("Digit: %i\n", digit);	          
 			switch(segment) {
 				//Sets the LCD to be equal to zero.
 				case(0):
@@ -82,6 +90,8 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;
 				//Sets the LCD to be equal to one.
 				case(1):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -90,7 +100,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 				//Sets the LCD to be equal to two.					
 				case(2):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -99,7 +111,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);	
+                         break;	
 				//Sets the LCD to be equal to three.
 				case(3):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -108,7 +122,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);	
+                         break;	
 				//Sets the LCD to be equal to four.					
 				case(4):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -117,7 +133,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 				//Sets the LCD to be equal to five.					
 				case(5):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -126,7 +144,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);		
+                         break;
 				//Sets the LCD to be equal to six.					
 				case(6):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -135,7 +155,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);		
+                         break;
 				//Sets the LCD to be equal to seven.					
 				case(7):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -144,7 +166,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);	
+                         break;	
 				//Sets the LCD to be equal to eight.					
 				case(8):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -153,7 +177,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);		
+                         break;
 				//Sets the LCD to be equal to nine.					
 				case(9):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -162,7 +188,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);	
+                         break;	
 				//Sets the LCD to be equal to NUL.				
 				case(10):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -171,14 +199,17 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g					
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;					
 			}
 			//Controls the second digit 0100
 		case(1):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_SET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); 				
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); 					
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET); 
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET); 				
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);          
+               printf("Digit: %i\n", digit);	          
 			switch(segment) {
 //Sets the LCD to be equal to zero.
 				case(0):
@@ -189,6 +220,8 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;
 				//Sets the LCD to be equal to one.
 				case(1):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -197,7 +230,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 				//Sets the LCD to be equal to two.					
 				case(2):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -206,7 +241,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to three.
 				case(3):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -215,7 +252,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to four.					
 				case(4):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -224,7 +263,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to five.					
 				case(5):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -233,7 +274,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to six.					
 				case(6):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -242,7 +285,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to seven.					
 				case(7):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -251,7 +296,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to eight.					
 				case(8):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -260,7 +307,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to nine.					
 				case(9):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -269,7 +318,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to NUL.				
 				case(10):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -278,14 +329,17 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 			}
 		//Controls the second digit 0010
 		case(2):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_SET); 				
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET); 				
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);    
+               printf("Digit: %i\n", digit);	
 			switch(segment) {
 //Sets the LCD to be equal to zero.
 				case(0):
@@ -296,6 +350,8 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;
 				//Sets the LCD to be equal to one.
 				case(1):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -304,7 +360,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 				//Sets the LCD to be equal to two.					
 				case(2):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -313,7 +371,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to three.
 				case(3):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -322,7 +382,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to four.					
 				case(4):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -331,7 +393,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to five.					
 				case(5):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -340,7 +404,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to six.					
 				case(6):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -349,7 +415,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to seven.					
 				case(7):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -358,7 +426,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to eight.					
 				case(8):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -367,7 +437,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to nine.					
 				case(9):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -376,7 +448,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to NUL.				
 				case(10):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -385,14 +459,17 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 			}
 		//Controls the second digit 0001
 		case(3):
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_8, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_9, GPIO_PIN_RESET); 
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET); 				
-			HAL_GPIO_WritePin(GPIOA, GPIO_PIN_15, GPIO_PIN_SET); 
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); 
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET); 				
+			HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET);    
+               printf("Digit: %i\n", digit);	
 			switch(segment) {
 //Sets the LCD to be equal to zero.
 				case(0):
@@ -403,6 +480,8 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;
 				//Sets the LCD to be equal to one.
 				case(1):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -411,7 +490,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 				//Sets the LCD to be equal to two.					
 				case(2):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -420,7 +501,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to three.
 				case(3):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -429,7 +512,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to four.					
 				case(4):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -438,7 +523,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to five.					
 				case(5):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -447,7 +534,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to six.					
 				case(6):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -456,7 +545,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g	
+                         printf("%i\n", segment);
+                         break;	
 				//Sets the LCD to be equal to seven.					
 				case(7):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -465,7 +556,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to eight.					
 				case(8):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -474,7 +567,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_SET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to nine.					
 				case(9):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_SET); //Pin a
@@ -483,7 +578,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g		
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_SET); //Pin g
+                         printf("%i\n", segment);
+                         break;		
 				//Sets the LCD to be equal to NUL.				
 				case(10):
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET); //Pin a
@@ -492,7 +589,9 @@ void set_LED(int digit, int segment) {
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_3, GPIO_PIN_RESET); //Pin d
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET); //Pin e
 					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET); //Pin f
-					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g	
+					HAL_GPIO_WritePin(GPIOA, GPIO_PIN_6, GPIO_PIN_RESET); //Pin g
+                         printf("%i\n", segment);
+                         break;	
 			}
 	}
 }

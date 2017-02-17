@@ -53,7 +53,7 @@
 
 /* USER CODE BEGIN Prototypes */
 void init_ADC();
-uint32_t read_temp();
+float read_temp();
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -52,7 +52,7 @@ void init_ADC() {
 	ADC1_Init.ScanConvMode = DISABLE;
 	ADC1_Init.EOCSelection = DISABLE;
 	//Sets the ADC to not continuously convert data.
-	ADC1_Init.ContinuousConvMode = DISABLE;
+	ADC1_Init.ContinuousConvMode = ENABLE;
 	ADC1_Init.DMAContinuousRequests = DISABLE;
 	ADC1_Init.NbrOfConversion = 1;
 	ADC1_Init.DiscontinuousConvMode = DISABLE;
@@ -76,8 +76,8 @@ void init_ADC() {
 	HAL_ADC_Start(&ADC1_Handle);
 }
 
-uint32_t read_temp() {
-	uint32_t adc_data;
+float read_temp() {
+	float adc_data;
 	struct FIR_coeff coeff;
 	coeff.b0 = 0.1;
 	coeff.b1 = 0.15;
@@ -85,14 +85,16 @@ uint32_t read_temp() {
 	coeff.b3 = 0.15;
 	coeff.b4 = 0.1;
 	
-	HAL_StatusTypeDef status;
+     adc_data = HAL_ADC_GetValue(&ADC1_Handle);
+     return adc_data;
+	/*HAL_StatusTypeDef status;
 	status = HAL_ADC_PollForConversion(&ADC1_Handle, 0);
 	if(status == HAL_OK) {
 		adc_data = HAL_ADC_GetValue(&ADC1_Handle);
 		return FIR_C(adc_data, &coeff, 4);
 	}
 	else if(status == HAL_ERROR || status == HAL_TIMEOUT)
-		return -1;
+		return -1;*/
 }
 /* USER CODE END 0 */
 

@@ -35,8 +35,8 @@
 #include "adc.h"
 #include "gpio.h"
 
-#define Avg_Slope 	          0.025
-#define V_25				0.76
+#define Avg_Slope 	          25
+#define V_25				760
 
 /* USER CODE BEGIN Includes */
 
@@ -75,24 +75,34 @@ int main(void)
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-	init_ADC();
-	init_GPIO();
+  init_ADC(); 
+  init_GPIO();
 
   /* Configure the system clock */
   SystemClock_Config();
 
   /* USER CODE BEGIN 2 */
-	uint32_t adc_data;
+	float adc_data;
 	float temp;
+     int counter = 0;
+     
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		adc_data = read_temp();
-		temp = convertToTemp(adc_data);
-		displayTemp(temp);
+	adc_data = read_temp();
+     //printf("ADC DATA: %f\n", adc_data);
+	temp = convertToTemp(adc_data);
+     //printf("Temp: %f\n", temp);
+     counter++;
+       
+     if(counter == 10) {
+          displayTemp(temp);
+          counter = 0;
+     }
+   
   /* USER CODE END WHILE */
 	
   /* USER CODE BEGIN 3 */
@@ -145,7 +155,7 @@ float convertToTemp(uint32_t adc_data)
 {
 	float temp;
 	
-	temp = (((float)adc_data - V_25)/Avg_Slope) + 25;
+	temp = (((float)adc_data - V_25)/Avg_Slope) + 13;
 	
 	return temp;
 }
@@ -155,8 +165,9 @@ void displayTemp(float temp)
 	int display[4];
 	display[3] = 10;
 	display[2] = (int) (temp/10);
-	display[1] = (int) (temp - display[2]);
-	display[0] = (int) ((temp*10) - display[2] - display[1]);
+	display[1] = (int) (temp - display[2]*10);
+	display[0] = (int) ((temp*10) - display[2]*100 - display[1]*10);
+     printf("Display on LED: %d %d %d %d\n", display[3], display[2], display[1], display[0]);
 	
 	set_LED(3, display[3]);
 	set_LED(2, display[2]);
