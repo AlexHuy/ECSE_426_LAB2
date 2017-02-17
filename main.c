@@ -35,7 +35,7 @@
 #include "adc.h"
 #include "gpio.h"
 
-#define Avg_Slope 	0.025
+#define Avg_Slope 	          0.025
 #define V_25				0.76
 
 /* USER CODE BEGIN Includes */
