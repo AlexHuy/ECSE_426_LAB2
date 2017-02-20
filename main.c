@@ -101,14 +101,18 @@ int main(void)
             counter++;
             systick_flag = 0;
             
+						if(counter == 10) {
+							counter = 0;
+							}
             adc_data = read_temp();
                //printf("ADC DATA: %f\n", adc_data);
                temp = convertToTemp(adc_data);
                printf("Temp: %f\n", temp);
             check_overheat(temp);
-            //counter = 0;
+            
           
                displayTemp(temp);
+						
                
        }
 	
@@ -179,10 +183,31 @@ void displayTemp(float temp)
 	display[0] = (int) ((temp*10) - display[2]*100 - display[1]*10);
      //printf("Display on LED: %d %d %d %d\n", display[3], display[2], display[1], display[0]);
 	
-	/*set_LED(3, display[3]);
-	set_LED(2, display[2]);
-	set_LED(1, display[1]);
-	set_LED(0, display[0]);*/
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); 
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET); 				
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_SET); 	
+	set_LED(display[3]);
+	
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); 
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_SET); 				
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET); 
+	set_LED(display[2]);
+	
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_SET); 
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET); 				
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);  
+	set_LED(display[1]);
+	
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_1, GPIO_PIN_RESET); 
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_2, GPIO_PIN_RESET); 				
+	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
+	if( counter == 10){
+	set_LED(display[0]);
+	}
 }
 
 int check_overheat(float temp)

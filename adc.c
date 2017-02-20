@@ -50,9 +50,9 @@ void init_ADC() {
 	ADC1_Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	//Disables multi channel scanning and instead only uses a single channel.
 	ADC1_Init.ScanConvMode = DISABLE;
-	ADC1_Init.EOCSelection = ENABLE;
+	ADC1_Init.EOCSelection = DISABLE;
 	//Sets the ADC to not continuously convert data.
-	ADC1_Init.ContinuousConvMode = DISABLE;
+	ADC1_Init.ContinuousConvMode = ENABLE;
 	ADC1_Init.DMAContinuousRequests = DISABLE;
 	ADC1_Init.NbrOfConversion = 1;
 	ADC1_Init.DiscontinuousConvMode = DISABLE;
@@ -85,13 +85,15 @@ float read_temp() {
 	coeff.b3 = 0.15;
 	coeff.b4 = 0.1;
 	
-     adc_data = HAL_ADC_GetValue(&ADC1_Handle);
-     return adc_data;
+	adc_data = HAL_ADC_GetValue(&ADC1_Handle);
+	//return adc_data;
+	return FIR_C(adc_data, &coeff, 4);
 	/*HAL_StatusTypeDef status;
 	status = HAL_ADC_PollForConversion(&ADC1_Handle, 0);
 	if(status == HAL_OK) {
 		adc_data = HAL_ADC_GetValue(&ADC1_Handle);
-		return FIR_C(adc_data, &coeff, 4);
+		return adc_data;
+		//return FIR_C(adc_data, &coeff, 4);
 	}
 	else if(status == HAL_ERROR || status == HAL_TIMEOUT)
 		return -1;*/

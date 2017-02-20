@@ -54,7 +54,7 @@
 
 /* USER CODE BEGIN Prototypes */
 void init_GPIO();
-void set_LED(int digit, int segment);
+void set_LED(int segment);
 void set_warning(int enable);
 /* USER CODE END Prototypes */
 
