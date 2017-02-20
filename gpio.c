@@ -37,6 +37,7 @@
 /* USER CODE BEGIN 0 */
 GPIO_InitTypeDef GPIOA_init;
 GPIO_InitTypeDef GPIOC_init;
+GPIO_InitTypeDef GPIOD_init;
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -44,18 +45,24 @@ GPIO_InitTypeDef GPIOC_init;
 /*----------------------------------------------------------------------------*/
 /* USER CODE BEGIN 1 */
 void init_GPIO() {
-	GPIOA_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
-	GPIOA_init.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIOA_init.Pull = GPIO_NOPULL;
-	GPIOA_init.Speed = GPIO_SPEED_FREQ_LOW;
+			GPIOA_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
+			GPIOA_init.Mode = GPIO_MODE_OUTPUT_PP;
+			GPIOA_init.Pull = GPIO_NOPULL;
+			GPIOA_init.Speed = GPIO_SPEED_FREQ_HIGH;
      
-     GPIOC_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3;
-     GPIOC_init.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIOC_init.Pull = GPIO_NOPULL;
-	GPIOC_init.Speed = GPIO_SPEED_FREQ_LOW;
+			GPIOC_init.Pin = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3;
+			GPIOC_init.Mode = GPIO_MODE_OUTPUT_PP;
+			GPIOC_init.Pull = GPIO_NOPULL;
+			GPIOC_init.Speed = GPIO_SPEED_FREQ_HIGH;
+     
+			GPIOD_init.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15;
+			GPIOD_init.Mode = GPIO_MODE_OUTPUT_OD;
+			GPIOD_init.Pull = GPIO_NOPULL;
+			GPIOD_init.Speed = GPIO_SPEED_FREQ_HIGH;
 	
-	HAL_GPIO_Init(GPIOA, &GPIOA_init);
-     HAL_GPIO_Init(GPIOC, &GPIOC_init);
+			HAL_GPIO_Init(GPIOA, &GPIOA_init);
+			HAL_GPIO_Init(GPIOC, &GPIOC_init);
+			HAL_GPIO_Init(GPIOD, &GPIOD_init);
 }
 /* USER CODE END 1 */
 
@@ -71,6 +78,21 @@ void init_GPIO() {
 */
 
 /* USER CODE BEGIN 2 */
+void set_warning(int enable) {
+     if(enable == 1) {
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_SET);
+     }
+     else {
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_RESET);
+          HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
+     }
+}
+
 void set_LED(int digit, int segment) {
 	switch(digit) {
 		//Controls the first digit 1000

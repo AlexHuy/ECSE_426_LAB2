@@ -36,13 +36,15 @@
 #include "gpio.h"
 
 #define Avg_Slope 	          25
-#define V_25				760
+#define V_25									760
 
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
+
+int systick_flag, counter;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
@@ -56,6 +58,7 @@ void SystemClock_Config(void);
 /* Private function prototypes -----------------------------------------------*/
 float convertToTemp(uint32_t adc_data) ;
 void displayTemp(float temp);
+int check_overheat(float temp);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -68,6 +71,8 @@ int main(void)
   /* USER CODE BEGIN 1 */
 	__HAL_RCC_ADC1_CLK_ENABLE();
 	__HAL_RCC_GPIOA_CLK_ENABLE();
+     __HAL_RCC_GPIOC_CLK_ENABLE();
+     __HAL_RCC_GPIOD_CLK_ENABLE();
 	__HAL_RCC_DMA1_CLK_ENABLE();
   /* USER CODE END 1 */
  
@@ -84,25 +89,30 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	float adc_data;
 	float temp;
-     int counter = 0;
      
+     set_warning(1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	adc_data = read_temp();
-     //printf("ADC DATA: %f\n", adc_data);
-	temp = convertToTemp(adc_data);
-     //printf("Temp: %f\n", temp);
-     counter++;
-       
-     if(counter == 10) {
-          displayTemp(temp);
-          counter = 0;
-     }
-   
+       if (systick_flag == 1){
+            counter++;
+            systick_flag = 0;
+            
+            adc_data = read_temp();
+               //printf("ADC DATA: %f\n", adc_data);
+               temp = convertToTemp(adc_data);
+               printf("Temp: %f\n", temp);
+            check_overheat(temp);
+            //counter = 0;
+          
+               displayTemp(temp);
+               
+       }
+	
+          
   /* USER CODE END WHILE */
 	
   /* USER CODE BEGIN 3 */
@@ -167,12 +177,23 @@ void displayTemp(float temp)
 	display[2] = (int) (temp/10);
 	display[1] = (int) (temp - display[2]*10);
 	display[0] = (int) ((temp*10) - display[2]*100 - display[1]*10);
-     printf("Display on LED: %d %d %d %d\n", display[3], display[2], display[1], display[0]);
+     //printf("Display on LED: %d %d %d %d\n", display[3], display[2], display[1], display[0]);
 	
-	set_LED(3, display[3]);
+	/*set_LED(3, display[3]);
 	set_LED(2, display[2]);
 	set_LED(1, display[1]);
-	set_LED(0, display[0]);
+	set_LED(0, display[0]);*/
+}
+
+int check_overheat(float temp)
+{
+     if(temp > 26.0f) { 
+          set_warning(1);
+     }
+     else
+          set_warning(0);
+     
+     return 1;
 }
 /* USER CODE END 4 */
 
@@ -205,3 +226,4 @@ void assert_failed(uint8_t* file, uint32_t line)
 */ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+

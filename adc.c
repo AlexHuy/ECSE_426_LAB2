@@ -50,9 +50,9 @@ void init_ADC() {
 	ADC1_Init.DataAlign = ADC_DATAALIGN_RIGHT;
 	//Disables multi channel scanning and instead only uses a single channel.
 	ADC1_Init.ScanConvMode = DISABLE;
-	ADC1_Init.EOCSelection = DISABLE;
+	ADC1_Init.EOCSelection = ENABLE;
 	//Sets the ADC to not continuously convert data.
-	ADC1_Init.ContinuousConvMode = ENABLE;
+	ADC1_Init.ContinuousConvMode = DISABLE;
 	ADC1_Init.DMAContinuousRequests = DISABLE;
 	ADC1_Init.NbrOfConversion = 1;
 	ADC1_Init.DiscontinuousConvMode = DISABLE;
